@@ -1,0 +1,15 @@
+/fp-scala-exercises/target/
+/todo-cli/target/
+/todo-cli/project/target/
+/fp-scala-exercises/project/target/
+
+#### java ####
+
+*.class
+*.cache
+
+/fp-scala-exercises/.idea/
+/todo-cli/.idea/
+/todo-cli/.bsp/
+/fp-scala-exercises/.bsp/
+/.idea/
