@@ -1,10 +1,11 @@
-import models.TodoItem
-import services.StateService
+import cats.effect.unsafe.implicits.global
+import services.{TodoRuntime, LiveConsole, IOService}
 
 object Main extends App {
-  val ps = new StateService
+  val stateService = new IOService
+  val console = new LiveConsole
 
-  val tdi = TodoItem("title", "desc", false)
+  val ioService = new TodoRuntime(console, stateService)
 
-  println(ps.writeToFile(List(tdi)).toOption.getOrElse("Something Went Wrong!"))
+  ioService.mainLoop().unsafeRunSync()
 }

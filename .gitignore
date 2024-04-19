@@ -13,3 +13,4 @@
 /todo-cli/.bsp/
 /fp-scala-exercises/.bsp/
 /.idea/
+/todo-cli/src/main/resources/todos.dat

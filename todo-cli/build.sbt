@@ -26,7 +26,7 @@ version := "1.0"
 // You can define other libraries as dependencies in your build like this:
 
 val circeVersion = "0.14.1"
-val catsVersion = "2.5.3"
+val catsVersion = "3.5.4"
 
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.18" % "test"
 libraryDependencies += "org.scala-lang.modules" %% "scala-parser-combinators" % "2.3.0"
