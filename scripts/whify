@@ -1,0 +1,50 @@
+#!/bin/bash
+set -e
+
+help()
+{
+  printf "Usage:\n" >/dev/stderr
+  printf "whify [-ah] <account> \"<url/to/aws>\"\n"
+  printf "options:\n"
+  printf "a     Use aws_login link\n"
+  printf "h     Display usage"
+}
+
+while getopts ":ha" flag
+do
+  case "${flag}" in
+    a) USE_AWS_LOGIN=true;;
+    h) help; exit 0;;
+  esac
+done
+
+ACCOUNT_NAME=""
+DESTINATION=""
+if [ "$USE_AWS_LOGIN" = true ]; then
+  ACCOUNT_NAME=$2
+  DESTINATION=$3
+else
+  ACCOUNT_NAME=$1
+  DESTINATION=$2
+fi
+
+if [ -z "${ACCOUNT_NAME}" ] || [ -z "${DESTINATION}" ]; then
+  help
+  exit 1
+fi
+
+# GET AWS ACCOUNT NAME FROM WORMHOLE CONFIG
+CONFIG=$(cat ~/.wormhole)
+ACCT_ID=$(jq -r ".accounts.\"$ACCOUNT_NAME\"" <(echo $CONFIG))
+
+LINK=""
+if [ "$USE_AWS_LOGIN" = true ]; then
+  LINK="https://aws-login.api.bbci.co.uk/account/${ACCT_ID}/console?destination=$DESTINATION"
+else
+  LINK="https://wormhole.api.bbci.co.uk/account/${ACCT_ID}/console?destination=$DESTINATION"
+fi
+
+echo "Generated wormhole link for account $ACCT_ID:"
+echo $LINK
+echo $LINK | pbcopy
+echo "Copied to clipboard!"
